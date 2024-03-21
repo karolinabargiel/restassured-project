@@ -24,5 +24,11 @@ public class UserCreationTests {
         given().log().all().body(user).contentType("application/json")
                 .when().post("https://swaggerpetstore.przyklady.javastart.pl/v2/user")
                 .then().log().all().statusCode(200);
+
+        given().log().all()
+                .contentType("application/json")
+                .when().pathParam("username", "firstuser")
+                .get("https://swaggerpetstore.przyklady.javastart.pl/v2/user/{username}")
+                .then().log().all().statusCode(200);
     }
 }

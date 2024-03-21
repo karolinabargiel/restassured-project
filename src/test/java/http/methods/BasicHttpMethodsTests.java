@@ -34,4 +34,12 @@ public class BasicHttpMethodsTests {
                 .when().post("https://swaggerpetstore.przyklady.javastart.pl/v2/pet")
                 .then().log().all().statusCode(200);
     }
+
+    @Test
+    public void givenExistingPetIdWhenGetPetThenReturnPetTest() {
+        given().log().uri().log().method()
+                .pathParam("petId", 1)
+                .when().get("https://swaggerpetstore.przyklady.javastart.pl/v2/pet/{petId}")
+                .then().log().all().statusCode(200);
+    }
 }
