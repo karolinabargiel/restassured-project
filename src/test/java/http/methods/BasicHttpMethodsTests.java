@@ -1,6 +1,11 @@
 package http.methods;
 
 import org.testng.annotations.Test;
+import pojo.Category;
+import pojo.Pet;
+import pojo.Tag;
+
+import java.util.Collections;
 
 import static io.restassured.RestAssured.given;
 
@@ -9,26 +14,22 @@ public class BasicHttpMethodsTests {
     @Test
     public void givenPetWhenPostPetThenPetIsCreatedTest() {
 
-        String pet = """
-                {
-                  "id": 123,
-                  "category": {
-                    "id": 1,
-                    "name": "cat"
-                  },
-                  "name": "Puszak",
-                  "photoUrls": [
-                    "http://photos.com/cat1.jpg"
-                  ],
-                  "tags": [
-                    {
-                      "id": 1,
-                      "name": "cat-category"
-                    }
-                  ],
-                  "status": "available"
-                }
-                """;
+        Category category = new Category();
+        category.setId(1);
+        category.setName("cat");
+
+        Tag tag = new Tag();
+        tag.setId(1);
+        tag.setName("cat-category");
+
+        Pet pet = new Pet();
+        pet.setId(123);
+        pet.setCategory(category);
+        pet.setName("Puszak");
+        pet.setPhotoUrls(Collections.singletonList("http://photos.com/cat1.jpg"));
+        pet.setTags(Collections.singletonList(tag));
+        pet.setStatus("available");
+
 
         given().log().all().body(pet).contentType("application/json")
                 .when().post("https://swaggerpetstore.przyklady.javastart.pl/v2/pet")
