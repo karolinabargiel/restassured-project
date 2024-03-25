@@ -64,12 +64,7 @@ public class BasicHttpMethodsTests {
                 .when().post("https://swaggerpetstore.przyklady.javastart.pl/v2/pet")
                 .then().log().all().statusCode(200);
 
-        pet.setId(123);
-        pet.setCategory(category);
         pet.setName("Kicia");
-        pet.setPhotoUrls(Collections.singletonList("http://photos.com/cat1.jpg"));
-        pet.setTags(Collections.singletonList(tag));
-        pet.setStatus("available");
 
         given().log().all().body(pet).contentType("application/json")
                 .when().put("https://swaggerpetstore.przyklady.javastart.pl/v2/pet")
@@ -96,15 +91,8 @@ public class BasicHttpMethodsTests {
                 .when().post("https://swaggerpetstore.przyklady.javastart.pl/v2/pet")
                 .then().log().all().statusCode(200);
 
-        pet.setId(888);
-        pet.setCategory(category);
-        pet.setName("Puszak");
-        pet.setPhotoUrls(Collections.singletonList("http://photos.com/cat1.jpg"));
-        pet.setTags(Collections.singletonList(tag));
-        pet.setStatus("available");
-
         given().log().all().body(pet).contentType("application/json")
-                .pathParam("petId", 888)
+                .pathParam("petId", pet.getId())
                 .when().delete("https://swaggerpetstore.przyklady.javastart.pl/v2/pet/{petId}")
                 .then().log().all().statusCode(200);
     }
