@@ -1,11 +1,12 @@
 package tasks;
 
+import base.TestBase;
 import org.testng.annotations.Test;
 import pojo.user.User;
 
 import static io.restassured.RestAssured.given;
 
-public class UserUpdateTests {
+public class UserUpdateTests extends TestBase {
     User user = new User();
 
     @Test
@@ -20,7 +21,7 @@ public class UserUpdateTests {
         user.setUserStatus(1);
 
         given().log().all().body(user).contentType("application/json")
-                .when().post("https://swaggerpetstore.przyklady.javastart.pl/v2/user")
+                .when().post("user")
                 .then().log().all().statusCode(200);
 
         user.setFirstName("Damian");
@@ -29,13 +30,13 @@ public class UserUpdateTests {
         given().log().all().body(user)
                 .contentType("application/json")
                 .when().pathParam("username", user.getUsername())
-                .put("https://swaggerpetstore.przyklady.javastart.pl/v2/user/{username}")
+                .put("user/{username}")
                 .then().log().all().statusCode(200);
 
         given().log().all()
                 .contentType("application/json")
                 .when().pathParam("username", user.getUsername())
-                .get("https://swaggerpetstore.przyklady.javastart.pl/v2/user/{username}")
+                .get("user/{username}")
                 .then().log().all().statusCode(200);
     }
 }

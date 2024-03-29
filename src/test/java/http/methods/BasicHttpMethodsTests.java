@@ -1,5 +1,6 @@
 package http.methods;
 
+import base.TestBase;
 import org.testng.annotations.Test;
 import pojo.Category;
 import pojo.Pet;
@@ -9,7 +10,7 @@ import java.util.Collections;
 
 import static io.restassured.RestAssured.given;
 
-public class BasicHttpMethodsTests {
+public class BasicHttpMethodsTests extends TestBase {
 
     Category category = new Category();
     Tag tag = new Tag();
@@ -32,7 +33,7 @@ public class BasicHttpMethodsTests {
         pet.setStatus("available");
 
         given().log().all().body(pet).contentType("application/json")
-                .when().post("https://swaggerpetstore.przyklady.javastart.pl/v2/pet")
+                .when().post("pet")
                 .then().log().all().statusCode(200);
     }
 
@@ -40,7 +41,7 @@ public class BasicHttpMethodsTests {
     public void givenExistingPetIdWhenGetPetThenReturnPetTest() {
         given().log().uri().log().method()
                 .pathParam("petId", 1)
-                .when().get("https://swaggerpetstore.przyklady.javastart.pl/v2/pet/{petId}")
+                .when().get("pet/{petId}")
                 .then().log().all().statusCode(200);
     }
 
@@ -61,13 +62,13 @@ public class BasicHttpMethodsTests {
         pet.setStatus("available");
 
         given().log().all().body(pet).contentType("application/json")
-                .when().post("https://swaggerpetstore.przyklady.javastart.pl/v2/pet")
+                .when().post("pet")
                 .then().log().all().statusCode(200);
 
         pet.setName("Kicia");
 
         given().log().all().body(pet).contentType("application/json")
-                .when().put("https://swaggerpetstore.przyklady.javastart.pl/v2/pet")
+                .when().put("pet")
                 .then().log().all().statusCode(200);
     }
 
@@ -88,12 +89,12 @@ public class BasicHttpMethodsTests {
         pet.setStatus("available");
 
         given().log().all().body(pet).contentType("application/json")
-                .when().post("https://swaggerpetstore.przyklady.javastart.pl/v2/pet")
+                .when().post("pet")
                 .then().log().all().statusCode(200);
 
         given().log().all().body(pet).contentType("application/json")
                 .pathParam("petId", pet.getId())
-                .when().delete("https://swaggerpetstore.przyklady.javastart.pl/v2/pet/{petId}")
+                .when().delete("pet/{petId}")
                 .then().log().all().statusCode(200);
     }
 }
